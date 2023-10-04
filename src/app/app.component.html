@@ -1,1 +1,37 @@
-app works!
+<div class="container">
+  <app-filters testId="filters"></app-filters>
+
+  <div class="result" testId="result">
+    <app-winner #winnerComponent [winner]="winner" testId="winner"></app-winner>
+    <ng-container *ngIf="!isLoading && (person$ | async) as result">
+      <div class="card-container">
+        <app-person
+          [activeFilter]="filters.toggledFilter"
+          [person]="result[0]"
+        ></app-person>
+        <app-person
+          [activeFilter]="filters.toggledFilter"
+          [person]="result[1]"
+        ></app-person>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="!isLoading && (starship$ | async) as result">
+      <div class="card-container">
+        <app-starship
+          [activeFilter]="filters.toggledFilter"
+          [starship]="result[0]"
+        ></app-starship>
+        <app-starship
+          [activeFilter]="filters.toggledFilter"
+          [starship]="result[1]"
+        ></app-starship>
+      </div>
+    </ng-container>
+  </div>
+  <mat-spinner
+    *ngIf="isLoading && !errorMessage"
+    testId="spinner"
+  ></mat-spinner>
+  <ng-container *ngIf="errorMessage">{{ errorMessage }}</ng-container>
+  <button mat-button (click)="onClick()" testId="button">Search</button>
+</div>

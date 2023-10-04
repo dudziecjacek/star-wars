@@ -1,27 +1,127 @@
-import { TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { of, throwError } from 'rxjs';
 import { AppComponent } from './app.component';
+import { HttpErrorResponse } from '@angular/common/http';
+import { FiltersService } from 'src/services/filters/filters.service';
+import { SwapiService } from 'src/services/swapi/swapi.service';
+import { FiltersComponent } from './components/filters/filters.component';
+import { StarshipComponent } from './components/starship/starship.component';
+import { WinnerComponent } from './components/winner/winner.component';
+import { PersonComponent } from './components/person/person.component';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { Filters } from 'src/models/filters';
+import { ObjectType } from 'src/enums/object-type';
+import { PeopleSubfilter } from 'src/enums/people-subfilter';
+import { StarshipsSubfilter } from 'src/enums/starships-subfilter';
+import { Person } from 'src/models/person';
+import { Starship } from 'src/models/starship';
 
-describe('AppComponent', () => {
-  beforeEach(() => TestBed.configureTestingModule({
-    declarations: [AppComponent]
-  }));
+fdescribe('AppComponent', () => {
+  let component: AppComponent;
+  let fixture: ComponentFixture<AppComponent>;
+  let mockSwapiService: jasmine.SpyObj<SwapiService>;
+  let mockFiltersService: jasmine.SpyObj<FiltersService>;
 
-  it('should create the app', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app).toBeTruthy();
+  beforeEach(async () => {
+    mockSwapiService = jasmine.createSpyObj('SwapiService', [
+      'getPeopleArray',
+      'getStarshipsArray',
+      'getPersonResponse$',
+      'getStarshipResponse$',
+    ]);
+    mockFiltersService = jasmine.createSpyObj('FiltersService', ['setFilters']);
+
+    mockFiltersService.filters = prepareFilters();
+
+    mockSwapiService.getPeopleArray.and.returnValue(of(mockPersonArray()));
+    mockSwapiService.getStarshipsArray.and.returnValue(of(mockStarshipArray()));
+
+    await TestBed.configureTestingModule({
+      declarations: [
+        AppComponent,
+        FiltersComponent,
+        PersonComponent,
+        WinnerComponent,
+        StarshipComponent,
+      ],
+      imports: [MatButtonToggleModule],
+      providers: [
+        { provide: SwapiService, useValue: mockSwapiService },
+        { provide: FiltersService, useValue: mockFiltersService },
+      ],
+    });
+
+    fixture = TestBed.createComponent(AppComponent);
+    component = fixture.componentInstance;
+
+    mockSwapiService = TestBed.inject(
+      SwapiService
+    ) as jasmine.SpyObj<SwapiService>;
+    mockFiltersService = TestBed.inject(
+      FiltersService
+    ) as jasmine.SpyObj<FiltersService>;
   });
 
-  it(`should have as title 'star-wars'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app.title).toEqual('star-wars');
+  it('should create the component', () => {
+    expect(component).toBeTruthy();
   });
 
-  it('should render title', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('star-wars app is running!');
+  describe('onClick method', () => {
+    it('should call loadData method', () => {
+      const loadDataSpy = spyOn(component, <never>'loadData');
+      component['onClick']();
+      expect(loadDataSpy).toHaveBeenCalled();
+    });
+  });
+
+  describe('loadData method', () => {
+    it('should set isLoading to true and call the determineSearchType method', () => {
+      const determineSearchTypeSpy: jasmine.Spy = spyOn(
+        component,
+        <never>'determineSearchType'
+      );
+
+      component['onClick']();
+      expect(component['isLoading']).toBeTrue();
+      expect(determineSearchTypeSpy).toHaveBeenCalledWith(ObjectType.PEOPLE);
+    });
   });
 });
+
+function prepareFilters(): Filters {
+  return {
+    toggledFilter: PeopleSubfilter.HEIGHT,
+    selectedPeopleFilter: PeopleSubfilter.HEIGHT,
+    selectedStarshipsFilter: StarshipsSubfilter.CREW,
+    main: { selected: ObjectType.PEOPLE, searched: ObjectType.NONE },
+  };
+}
+
+function mockPersonArray(): [Person, Person] {
+  return [
+    {
+      name: 'Luke Skywalker',
+      height: '172',
+      mass: '77',
+    },
+    {
+      name: 'Darth Vader',
+      height: '202',
+      mass: '136',
+    },
+  ];
+}
+function mockStarshipArray(): [Starship, Starship] {
+  return [
+    {
+      name: 'Millennium Falcon',
+      crew: '4',
+      length: '34.37',
+    },
+    {
+      name: 'Star Destroyer',
+      crew: '47,060',
+      length: '1,600',
+    },
+  ];
+}
