@@ -1,0 +1,12 @@
+:host {
+  width: 300px;
+}
+
+.attribute {
+  display: flex;
+  justify-content: space-between;
+
+  &.active {
+    background-color: wheat;
+  }
+}

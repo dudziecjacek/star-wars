@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, forkJoin, map, tap } from 'rxjs';
-import { SwapiAbstract } from './abstract/abstract-swapi';
+import { SwapiAbstract } from '../abstract/abstract-swapi';
 import { GetPersonResponse } from 'src/models/get-person-response';
 import { Person } from 'src/models/person';
 import { GetStarshipResponse } from 'src/models/get-starship-response';
@@ -12,27 +12,30 @@ import { ObjectType } from 'src/enums/object-type';
   providedIn: 'root',
 })
 export class SwapiService {
-  protected _getPersonResponse$: BehaviorSubject<[Person, Person]> =
-    new BehaviorSubject<[Person, Person]>(this.prepareGetPersonInitialValue());
-  protected _getStarshipResponse$: BehaviorSubject<[Starship, Starship]> =
-    new BehaviorSubject<[Starship, Starship]>(
-      this.prepareGetStarshipInitialValue()
-    );
+  protected _getPersonResponse$: BehaviorSubject<[Person, Person] | null> =
+    new BehaviorSubject<[Person, Person] | null>(null);
+  protected _getStarshipResponse$: BehaviorSubject<
+    [Starship, Starship] | null
+  > = new BehaviorSubject<[Starship, Starship] | null>(null);
 
   private readonly http: HttpClient = inject(HttpClient);
   private static readonly BASE_URL: string = 'https://www.swapi.tech/api/';
   private static readonly PEOPLE_URL: string = `${SwapiService.BASE_URL}${ObjectType.PEOPLE}/`;
   private static readonly STARSHIPS_URL: string = `${SwapiService.BASE_URL}${ObjectType.STARSHIPS}/`;
+  private static readonly ID_MAX_RANGE: number = 20;
 
-  getPerson(id: string): Observable<Person> {
+  public getPerson(id: string): Observable<Person> {
     return this.http
       .get<GetPersonResponse>(SwapiService.PEOPLE_URL + id)
       .pipe(map((response: GetPersonResponse) => response.result.properties));
   }
 
-  getPeopleArray(): Observable<[Person, Person]> {
+  public getPeopleArray(): Observable<[Person, Person]> {
     const [firstId, secondId] =
-      SwapiAbstract.getTwoDistinctRandomNumbersInRange(1, 20);
+      SwapiAbstract.getTwoDistinctRandomNumbersInRange(
+        1,
+        SwapiService.ID_MAX_RANGE
+      );
 
     return forkJoin([this.getPerson(firstId), this.getPerson(secondId)]).pipe(
       tap(([data1, data2]) => {
@@ -41,15 +44,18 @@ export class SwapiService {
     );
   }
 
-  getStarship(id: string): Observable<Starship> {
+  public getStarship(id: string): Observable<Starship> {
     return this.http
       .get<GetStarshipResponse>(SwapiService.STARSHIPS_URL + id)
       .pipe(map((response: GetStarshipResponse) => response.result.properties));
   }
 
-  getStarshipsArray(): Observable<[Starship, Starship]> {
+  public getStarshipsArray(): Observable<[Starship, Starship]> {
     const [firstId, secondId] =
-      SwapiAbstract.getTwoDistinctRandomNumbersInRange(1, 20);
+      SwapiAbstract.getTwoDistinctRandomNumbersInRange(
+        1,
+        SwapiService.ID_MAX_RANGE
+      );
 
     return forkJoin([
       this.getStarship(firstId),
@@ -62,40 +68,14 @@ export class SwapiService {
   }
 
   public get getPersonResponse$(): Observable<[Person, Person]> {
-    return this._getPersonResponse$.asObservable();
+    return this._getPersonResponse$.asObservable() as Observable<
+      [Person, Person]
+    >;
   }
 
   public get getStarshipResponse$(): Observable<[Starship, Starship]> {
-    return this._getStarshipResponse$.asObservable();
-  }
-
-  private prepareGetPersonInitialValue(): [Person, Person] {
-    return [
-      {
-        name: '',
-        height: '',
-        mass: '',
-      },
-      {
-        name: '',
-        height: '',
-        mass: '',
-      },
-    ];
-  }
-
-  private prepareGetStarshipInitialValue(): [Starship, Starship] {
-    return [
-      {
-        name: '',
-        crew: '',
-        length: '',
-      },
-      {
-        name: '',
-        crew: '',
-        length: '',
-      },
-    ];
+    return this._getStarshipResponse$.asObservable() as Observable<
+      [Starship, Starship]
+    >;
   }
 }

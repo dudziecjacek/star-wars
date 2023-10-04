@@ -1,7 +1,11 @@
 import { ResultEnum } from 'src/enums/result-enum';
 import { SwapiAbstract } from './abstract-swapi';
+import { PeopleSubfilter } from 'src/enums/people-subfilter';
+import { StarshipsSubfilter } from 'src/enums/starships-subfilter';
+import { Person } from 'src/models/person';
+import { Starship } from 'src/models/starship';
 
-fdescribe('SwapiAbstract', () => {
+describe('SwapiAbstract', () => {
   describe('getTwoDistinctRandomNumbersInRange method', () => {
     it('should return two distinct numbers within the given range', () => {
       const [num1, num2] = SwapiAbstract.getTwoDistinctRandomNumbersInRange(
@@ -17,34 +21,53 @@ fdescribe('SwapiAbstract', () => {
     });
   });
 
-  describe('determineWinner method', () => {
-    it('should return DRAW result if both inputs are "unknown"', () => {
-      const result = SwapiAbstract.determineWinner('unknown', 'unknown');
-      expect(result).toEqual(ResultEnum.DRAW);
+  describe('SwapiAbstract', () => {
+    describe('getTwoDistinctRandomNumbersInRange method', () => {
+      it('should return two distinct strings within the given range', () => {
+        const [num1, num2] = SwapiAbstract.getTwoDistinctRandomNumbersInRange(
+          1,
+          20
+        );
+        expect(num1).not.toEqual(num2);
+        expect(+num1).toBeGreaterThanOrEqual(1); // converting string to number for comparison
+        expect(+num1).toBeLessThanOrEqual(20);
+        expect(+num2).toBeGreaterThanOrEqual(1);
+        expect(+num2).toBeLessThanOrEqual(20);
+      });
     });
 
-    it('should return ONE if the second input is "unknown" and the first is not', () => {
-      const result = SwapiAbstract.determineWinner('15', 'unknown');
-      expect(result).toEqual(ResultEnum.ONE);
-    });
+    describe('determineWinner method', () => {
+      it('should determine winner based on PeopleSubfilter', () => {
+        const data: [Person, Person] = [
+          { name: '', height: '160', mass: '50' },
+          { name: '', height: '150', mass: '55' },
+        ];
 
-    it('should return TWO if the first input is "unknown" and the second is not', () => {
-      const result = SwapiAbstract.determineWinner('unknown', '15');
-      expect(result).toEqual(ResultEnum.TWO);
-    });
+        let result = SwapiAbstract.determineWinner(
+          data,
+          PeopleSubfilter.HEIGHT
+        );
+        expect(result).toEqual(ResultEnum.ONE);
 
-    it('should correctly compare two number strings and return the result', () => {
-      let result = SwapiAbstract.determineWinner('50', '20');
-      expect(result).toEqual(ResultEnum.ONE);
+        result = SwapiAbstract.determineWinner(data, PeopleSubfilter.MASS);
+        expect(result).toEqual(ResultEnum.TWO);
+      });
 
-      result = SwapiAbstract.determineWinner('20', '35');
-      expect(result).toEqual(ResultEnum.TWO);
+      it('should determine winner based on StarshipsSubfilter', () => {
+        const data: [Starship, Starship] = [
+          { name: '', crew: '10', length: '1000' },
+          { name: '', crew: '15', length: '900' },
+        ];
 
-      result = SwapiAbstract.determineWinner('10', '10');
-      expect(result).toEqual(ResultEnum.DRAW);
+        let result = SwapiAbstract.determineWinner(
+          data,
+          StarshipsSubfilter.CREW
+        );
+        expect(result).toEqual(ResultEnum.TWO);
 
-      result = SwapiAbstract.determineWinner('1,000', '777');
-      expect(result).toEqual(ResultEnum.ONE);
+        result = SwapiAbstract.determineWinner(data, StarshipsSubfilter.LENGTH);
+        expect(result).toEqual(ResultEnum.ONE);
+      });
     });
   });
 });

@@ -1,0 +1,23 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>{{ starship.name }}</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <div
+      class="attribute"
+      [class.active]="activeFilter === 'crew'"
+      testId="crewAttribute"
+    >
+      <div>Crew</div>
+      <div>{{ starship.crew }}</div>
+    </div>
+    <div
+      class="attribute"
+      [class.active]="activeFilter === 'length'"
+      testId="lengthAttribute"
+    >
+      <div>Length</div>
+      <div>{{ starship.length }}</div>
+    </div>
+  </mat-card-content>
+</mat-card>

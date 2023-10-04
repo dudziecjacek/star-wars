@@ -7,8 +7,11 @@ import {
 import { GetPersonResponse } from 'src/models/get-person-response';
 import { GetStarshipResponse } from 'src/models/get-starship-response';
 import { ObjectType } from 'src/enums/object-type';
+import { Person } from 'src/models/person';
+import { Starship } from 'src/models/starship';
+import { PersonOrStarship } from 'src/models/person-or-starship';
 
-fdescribe('SwapiService', () => {
+describe('SwapiService', () => {
   let service: SwapiService;
   let httpTestingController: HttpTestingController;
   const urlBase: string = 'https://www.swapi.tech/api/';
@@ -45,12 +48,12 @@ fdescribe('SwapiService', () => {
     it('should fetch two person data', () => {
       const mockResponses = prepareGetPerson();
 
-      service.getPeopleArray().subscribe((data: any) => {
+      service.getPeopleArray().subscribe((data: [Person, Person]) => {
         expect(data[0].name).toEqual('Yoda');
         expect(data[1].name).toEqual('Han Solo');
       });
 
-      const requests = httpTestingController.match((request: any) =>
+      const requests = httpTestingController.match((request) =>
         request.url.includes(`${urlBase}${ObjectType.PEOPLE}/`)
       );
       expect(requests[0].request.method).toEqual('GET');
@@ -79,12 +82,12 @@ fdescribe('SwapiService', () => {
     it('should fetch two person data', () => {
       const mockResponses = prepareGetStarships();
 
-      service.getStarshipsArray().subscribe((data: any) => {
+      service.getStarshipsArray().subscribe((data: [Starship, Starship]) => {
         expect(data[0].name).toEqual('Imperial');
         expect(data[1].name).toEqual('Corvette');
       });
 
-      const requests = httpTestingController.match((request: any) =>
+      const requests = httpTestingController.match((request) =>
         request.url.includes(`${urlBase}${ObjectType.STARSHIPS}/`)
       );
       expect(requests[0].request.method).toEqual('GET');

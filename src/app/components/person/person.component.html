@@ -1,0 +1,23 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>{{ person.name }}</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <div
+      class="attribute"
+      [class.active]="activeFilter === 'height'"
+      testId="heightAttribute"
+    >
+      <div>Height</div>
+      <div>{{ person.height }}</div>
+    </div>
+    <div
+      class="attribute"
+      [class.active]="activeFilter === 'mass'"
+      testId="massAttribute"
+    >
+      <div>Mass</div>
+      <div>{{ person.mass }}</div>
+    </div>
+  </mat-card-content>
+</mat-card>
