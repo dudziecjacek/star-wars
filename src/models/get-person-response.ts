@@ -1,9 +1,9 @@
-import { People } from './people';
+import { Person } from './person';
 
-export interface GetPeopleResponse {
+export interface GetPersonResponse {
   message: string;
   result: {
-    properties: People;
+    properties: Person;
     description: string;
     _id: string;
     uid: string;

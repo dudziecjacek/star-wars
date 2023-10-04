@@ -6,13 +6,13 @@ export abstract class SwapiAbstract {
   public static getTwoDistinctRandomNumbersInRange(
     min: number,
     max: number
-  ): number[] {
+  ): string[] {
     let firstNumber = this.getRandomInt(min, max);
     let secondNumber;
     do {
       secondNumber = this.getRandomInt(min, max);
     } while (firstNumber === secondNumber);
-    return [firstNumber, secondNumber];
+    return [String(firstNumber), String(secondNumber)];
   }
 
   public static determineWinner(
@@ -32,8 +32,8 @@ export abstract class SwapiAbstract {
       return ResultEnum.ONE;
     }
 
-    const firstNumber: number = Number(firstString.replace(',', ''));
-    const secondNumber: number = Number(secondString.replace(',', ''));
+    const firstNumber: number = Number(firstString?.replace(',', ''));
+    const secondNumber: number = Number(secondString?.replace(',', ''));
 
     if (firstNumber > secondNumber) {
       return ResultEnum.ONE;

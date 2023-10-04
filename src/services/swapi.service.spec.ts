@@ -4,10 +4,14 @@ import {
   HttpClientTestingModule,
   HttpTestingController,
 } from '@angular/common/http/testing';
+import { GetPersonResponse } from 'src/models/get-person-response';
+import { GetStarshipResponse } from 'src/models/get-starship-response';
+import { ObjectType } from 'src/enums/object-type';
 
-describe('SwapiService', () => {
+fdescribe('SwapiService', () => {
   let service: SwapiService;
   let httpTestingController: HttpTestingController;
+  const urlBase: string = 'https://www.swapi.tech/api/';
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -23,33 +27,65 @@ describe('SwapiService', () => {
     expect(service).toBeTruthy();
   });
 
-  describe('getPeople', () => {
-    it('should fetch people data and map properties', () => {
-      const mockResponse = prepareGetPeople()[0];
+  describe('people methods', () => {
+    it('should fetch person data and map properties', () => {
+      const mockResponse = prepareGetPerson()[0];
 
-      service.getPeople('people', 1).subscribe((data) => {
+      service.getPerson('1').subscribe((data) => {
         expect(data.name).toEqual('Yoda');
       });
       const req = httpTestingController.expectOne(
-        'https://www.swapi.tech/api/people/1'
+        `${urlBase}${ObjectType.PEOPLE}/1`
       );
 
       expect(req.request.method).toEqual('GET');
       req.flush(mockResponse);
     });
-  });
 
-  describe('getPeopleArray', () => {
-    it('should fetch two people data', () => {
-      const mockResponses = prepareGetPeople();
+    it('should fetch two person data', () => {
+      const mockResponses = prepareGetPerson();
 
-      service.getPeopleArray('people').subscribe((data: any) => {
+      service.getPeopleArray().subscribe((data: any) => {
         expect(data[0].name).toEqual('Yoda');
         expect(data[1].name).toEqual('Han Solo');
       });
 
       const requests = httpTestingController.match((request: any) =>
-        request.url.includes('https://www.swapi.tech/api/people/')
+        request.url.includes(`${urlBase}${ObjectType.PEOPLE}/`)
+      );
+      expect(requests[0].request.method).toEqual('GET');
+      expect(requests[1].request.method).toEqual('GET');
+
+      requests[0].flush(mockResponses[0]);
+      requests[1].flush(mockResponses[1]);
+    });
+  });
+
+  describe('starships methods', () => {
+    it('should fetch starship data and map properties', () => {
+      const mockResponse = prepareGetStarships()[0];
+
+      service.getStarship('1').subscribe((data) => {
+        expect(data.name).toEqual('Imperial');
+      });
+      const req = httpTestingController.expectOne(
+        `${urlBase}${ObjectType.STARSHIPS}/1`
+      );
+
+      expect(req.request.method).toEqual('GET');
+      req.flush(mockResponse);
+    });
+
+    it('should fetch two person data', () => {
+      const mockResponses = prepareGetStarships();
+
+      service.getStarshipsArray().subscribe((data: any) => {
+        expect(data[0].name).toEqual('Imperial');
+        expect(data[1].name).toEqual('Corvette');
+      });
+
+      const requests = httpTestingController.match((request: any) =>
+        request.url.includes(`${urlBase}${ObjectType.STARSHIPS}/`)
       );
       expect(requests[0].request.method).toEqual('GET');
       expect(requests[1].request.method).toEqual('GET');
@@ -60,20 +96,67 @@ describe('SwapiService', () => {
   });
 });
 
-function prepareGetPeople(): any {
+function prepareGetPerson(): GetPersonResponse[] {
   return [
     {
+      message: '',
       result: {
         properties: {
           name: 'Yoda',
+          height: '',
+          mass: '',
         },
+        description: '',
+        _id: '',
+        uid: '',
+        __v: 1,
       },
     },
     {
+      message: '',
       result: {
         properties: {
           name: 'Han Solo',
+          height: '',
+          mass: '',
         },
+        description: '',
+        _id: '',
+        uid: '',
+        __v: 1,
+      },
+    },
+  ];
+}
+
+function prepareGetStarships(): GetStarshipResponse[] {
+  return [
+    {
+      message: '',
+      result: {
+        properties: {
+          name: 'Imperial',
+          crew: '',
+          length: '',
+        },
+        description: '',
+        _id: '',
+        uid: '',
+        __v: 1,
+      },
+    },
+    {
+      message: '',
+      result: {
+        properties: {
+          name: 'Corvette',
+          crew: '',
+          length: '',
+        },
+        description: '',
+        _id: '',
+        uid: '',
+        __v: 1,
       },
     },
   ];

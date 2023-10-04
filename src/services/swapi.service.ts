@@ -2,44 +2,74 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, forkJoin, map, tap } from 'rxjs';
 import { SwapiAbstract } from './abstract/abstract-swapi';
-import { GetPeopleResponse } from 'src/models/get-people-response';
-import { People } from 'src/models/people';
+import { GetPersonResponse } from 'src/models/get-person-response';
+import { Person } from 'src/models/person';
+import { GetStarshipResponse } from 'src/models/get-starship-response';
+import { Starship } from 'src/models/starship';
+import { ObjectType } from 'src/enums/object-type';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SwapiService {
+  protected _getPersonResponse$: BehaviorSubject<[Person, Person]> =
+    new BehaviorSubject<[Person, Person]>(this.prepareGetPersonInitialValue());
+  protected _getStarshipResponse$: BehaviorSubject<[Starship, Starship]> =
+    new BehaviorSubject<[Starship, Starship]>(
+      this.prepareGetStarshipInitialValue()
+    );
+
   private readonly http: HttpClient = inject(HttpClient);
-  protected _getPeopleResponse$: BehaviorSubject<[People, People]> =
-    new BehaviorSubject<[People, People]>(this.prepareGetPeopleInitialValue());
-
   private static readonly BASE_URL: string = 'https://www.swapi.tech/api/';
+  private static readonly PEOPLE_URL: string = `${SwapiService.BASE_URL}${ObjectType.PEOPLE}/`;
+  private static readonly STARSHIPS_URL: string = `${SwapiService.BASE_URL}${ObjectType.STARSHIPS}/`;
 
-  getPeople(type: string, id: string | number): Observable<People> {
+  getPerson(id: string): Observable<Person> {
     return this.http
-      .get<GetPeopleResponse>(SwapiService.BASE_URL + `${type}/` + id)
-      .pipe(map((response: GetPeopleResponse) => response.result.properties));
+      .get<GetPersonResponse>(SwapiService.PEOPLE_URL + id)
+      .pipe(map((response: GetPersonResponse) => response.result.properties));
   }
 
-  getPeopleArray(type: string): Observable<[People, People]> {
+  getPeopleArray(): Observable<[Person, Person]> {
     const [firstId, secondId] =
-      SwapiAbstract.getTwoDistinctRandomNumbersInRange(1, 50);
+      SwapiAbstract.getTwoDistinctRandomNumbersInRange(1, 20);
 
-    return forkJoin([
-      this.getPeople(type, firstId),
-      this.getPeople(type, secondId),
-    ]).pipe(
+    return forkJoin([this.getPerson(firstId), this.getPerson(secondId)]).pipe(
       tap(([data1, data2]) => {
-        this._getPeopleResponse$.next([data1, data2]);
+        this._getPersonResponse$.next([data1, data2]);
       })
     );
   }
 
-  public get getPeopleResponse$(): Observable<[People, People]> {
-    return this._getPeopleResponse$.asObservable();
+  getStarship(id: string): Observable<Starship> {
+    return this.http
+      .get<GetStarshipResponse>(SwapiService.STARSHIPS_URL + id)
+      .pipe(map((response: GetStarshipResponse) => response.result.properties));
   }
 
-  private prepareGetPeopleInitialValue(): [People, People] {
+  getStarshipsArray(): Observable<[Starship, Starship]> {
+    const [firstId, secondId] =
+      SwapiAbstract.getTwoDistinctRandomNumbersInRange(1, 20);
+
+    return forkJoin([
+      this.getStarship(firstId),
+      this.getStarship(secondId),
+    ]).pipe(
+      tap(([data1, data2]) => {
+        this._getStarshipResponse$.next([data1, data2]);
+      })
+    );
+  }
+
+  public get getPersonResponse$(): Observable<[Person, Person]> {
+    return this._getPersonResponse$.asObservable();
+  }
+
+  public get getStarshipResponse$(): Observable<[Starship, Starship]> {
+    return this._getStarshipResponse$.asObservable();
+  }
+
+  private prepareGetPersonInitialValue(): [Person, Person] {
     return [
       {
         name: '',
@@ -50,6 +80,21 @@ export class SwapiService {
         name: '',
         height: '',
         mass: '',
+      },
+    ];
+  }
+
+  private prepareGetStarshipInitialValue(): [Starship, Starship] {
+    return [
+      {
+        name: '',
+        crew: '',
+        length: '',
+      },
+      {
+        name: '',
+        crew: '',
+        length: '',
       },
     ];
   }
