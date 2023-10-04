@@ -1,4 +1,4 @@
-# StarWars
+# Star Wars
 
 The application allows you to fight battles between characters from the Star Wars universe. The user can choose which type of resource to use in battle: people or aircraft. Each resource also has its own attributes to be selected, which will be compared.
 
