@@ -1,6 +1,6 @@
-import { ObjectType } from 'src/enums/object-type';
-import { PeopleSubfilter } from 'src/enums/people-subfilter';
-import { StarshipsSubfilter } from 'src/enums/starships-subfilter';
+import { ObjectType } from 'src/app/enums/object-type';
+import { PeopleSubfilter } from 'src/app/enums/people-subfilter';
+import { StarshipsSubfilter } from 'src/app/enums/starships-subfilter';
 
 export interface Filters {
   toggledFilter: PeopleSubfilter | StarshipsSubfilter;

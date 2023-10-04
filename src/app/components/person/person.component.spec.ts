@@ -1,9 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatCardModule } from '@angular/material/card';
 
-import { PeopleSubfilter } from 'src/enums';
+import { PeopleSubfilter } from 'src/app/enums';
 import { PersonComponent } from './person.component';
-import { Person } from 'src/models';
+import { Person } from 'src/app/models';
 
 describe('PersonComponent', () => {
   let component: PersonComponent;

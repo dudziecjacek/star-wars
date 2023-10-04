@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 
-import { PeopleSubfilter, StarshipsSubfilter } from 'src/enums/';
-import { Starship } from 'src/models/starship';
+import { PeopleSubfilter, StarshipsSubfilter } from 'src/app/enums';
+import { Starship } from 'src/app/models/starship';
 
 @Component({
   selector: 'app-starship',

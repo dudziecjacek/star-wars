@@ -1,23 +1,20 @@
-import { ResultEnum } from 'src/enums/result-enum';
 import { SwapiAbstract } from './abstract-swapi';
-import { PeopleSubfilter } from 'src/enums/people-subfilter';
-import { StarshipsSubfilter } from 'src/enums/starships-subfilter';
-import { Person } from 'src/models/person';
-import { Starship } from 'src/models/starship';
+import { PeopleSubfilter, ResultEnum, StarshipsSubfilter } from 'src/app/enums';
+import { Person, Starship } from 'src/app/models';
 
 describe('SwapiAbstract', () => {
   describe('getTwoDistinctRandomNumbersInRange method', () => {
     it('should return two distinct numbers within the given range', () => {
       const [num1, num2] = SwapiAbstract.getTwoDistinctRandomNumbersInRange(
         1,
-        20
+        10
       );
 
       expect(num1).not.toEqual(num2);
       expect(num1).toBeGreaterThanOrEqual(1);
-      expect(num1).toBeLessThanOrEqual(20);
+      expect(num1).toBeLessThanOrEqual(10);
       expect(num2).toBeGreaterThanOrEqual(1);
-      expect(num2).toBeLessThanOrEqual(20);
+      expect(num2).toBeLessThanOrEqual(10);
     });
   });
 
@@ -26,27 +23,24 @@ describe('SwapiAbstract', () => {
       it('should return two distinct strings within the given range', () => {
         const [num1, num2] = SwapiAbstract.getTwoDistinctRandomNumbersInRange(
           1,
-          20
+          10
         );
         expect(num1).not.toEqual(num2);
-        expect(+num1).toBeGreaterThanOrEqual(1); // converting string to number for comparison
-        expect(+num1).toBeLessThanOrEqual(20);
-        expect(+num2).toBeGreaterThanOrEqual(1);
-        expect(+num2).toBeLessThanOrEqual(20);
+        expect(num1).toBeGreaterThanOrEqual(1);
+        expect(num1).toBeLessThanOrEqual(10);
+        expect(num2).toBeGreaterThanOrEqual(1);
+        expect(num2).toBeLessThanOrEqual(10);
       });
     });
 
     describe('determineWinner method', () => {
       it('should determine winner based on PeopleSubfilter', () => {
-        const data: [Person, Person] = [
-          { name: '', height: '160', mass: '50' },
-          { name: '', height: '150', mass: '55' },
-        ];
-
-        let result = SwapiAbstract.determineWinner(
+        const data: [Person, Person] = preparePeopleArray();
+        let result: ResultEnum = SwapiAbstract.determineWinner(
           data,
           PeopleSubfilter.HEIGHT
         );
+
         expect(result).toEqual(ResultEnum.ONE);
 
         result = SwapiAbstract.determineWinner(data, PeopleSubfilter.MASS);
@@ -54,12 +48,9 @@ describe('SwapiAbstract', () => {
       });
 
       it('should determine winner based on StarshipsSubfilter', () => {
-        const data: [Starship, Starship] = [
-          { name: '', crew: '10', length: '1000' },
-          { name: '', crew: '15', length: '900' },
-        ];
+        const data: [Starship, Starship] = prepareStarshipsArray();
 
-        let result = SwapiAbstract.determineWinner(
+        let result: ResultEnum = SwapiAbstract.determineWinner(
           data,
           StarshipsSubfilter.CREW
         );
@@ -71,3 +62,17 @@ describe('SwapiAbstract', () => {
     });
   });
 });
+
+function preparePeopleArray(): [Person, Person] {
+  return [
+    { name: '', height: '260', mass: '35' },
+    { name: '', height: '150', mass: '55' },
+  ];
+}
+
+function prepareStarshipsArray(): [Starship, Starship] {
+  return [
+    { name: '', crew: '10', length: '350' },
+    { name: '', crew: '15', length: '244' },
+  ];
+}

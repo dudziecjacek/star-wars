@@ -12,7 +12,7 @@ import { StarshipComponent } from './components/starship/starship.component';
 import { PersonComponent } from './components/person/person.component';
 import { CommonModule } from '@angular/common';
 import { WinnerComponent } from './components/winner/winner.component';
-import { FiltersService } from 'src/services/filters/filters.service';
+import { FiltersService } from 'src/app/services/filters/filters.service';
 import { FiltersComponent } from './components/filters/filters.component';
 
 @NgModule({

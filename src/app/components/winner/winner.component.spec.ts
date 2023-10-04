@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { WinnerComponent } from './winner.component';
-import { ResultEnum } from 'src/enums/result-enum';
+import { ResultEnum } from 'src/app/enums/result-enum';
 
 describe('WinnerComponent', () => {
   let component: WinnerComponent;

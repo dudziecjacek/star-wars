@@ -1,8 +1,7 @@
 import { TestBed } from '@angular/core/testing';
+
 import { FiltersService } from './filters.service';
-import { ObjectType } from 'src/enums/object-type';
-import { PeopleSubfilter } from 'src/enums/people-subfilter';
-import { StarshipsSubfilter } from 'src/enums/starships-subfilter';
+import { ObjectType, PeopleSubfilter, StarshipsSubfilter } from 'src/app/enums';
 
 describe('FiltersService', () => {
   let service: FiltersService;

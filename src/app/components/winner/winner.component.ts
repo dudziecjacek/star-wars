@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 
-import { ResultEnum } from 'src/enums/result-enum';
+import { ResultEnum } from 'src/app/enums/result-enum';
 
 @Component({
   selector: 'app-winner',

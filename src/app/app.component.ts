@@ -2,11 +2,11 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ChangeDetectorRef, Component, ViewChild, inject } from '@angular/core';
 import { EMPTY, Observable, catchError, first, tap } from 'rxjs';
 
-import { ObjectType, ResultEnum } from 'src/enums';
-import { Filters, Person, Starship } from 'src/models';
-import { SwapiAbstract } from 'src/services/abstract/abstract-swapi';
-import { FiltersService } from 'src/services/filters/filters.service';
-import { SwapiService } from 'src/services/swapi/swapi.service';
+import { ObjectType, ResultEnum } from 'src/app/enums';
+import { Filters, Person, Starship } from 'src/app/models';
+import { SwapiAbstract } from 'src/app/services/abstract/abstract-swapi';
+import { FiltersService } from 'src/app/services/filters/filters.service';
+import { SwapiService } from 'src/app/services/swapi/swapi.service';
 import { WinnerComponent } from './components/winner/winner.component';
 
 @Component({

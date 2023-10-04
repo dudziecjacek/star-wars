@@ -3,8 +3,8 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { FormsModule } from '@angular/forms';
 
 import { FiltersComponent } from './filters.component';
-import { FiltersService } from 'src/services/filters/filters.service';
-import { ObjectType, PeopleSubfilter, StarshipsSubfilter } from 'src/enums';
+import { FiltersService } from 'src/app/services/filters/filters.service';
+import { ObjectType, PeopleSubfilter, StarshipsSubfilter } from 'src/app/enums';
 
 describe('FiltersComponent', () => {
   let component: FiltersComponent;

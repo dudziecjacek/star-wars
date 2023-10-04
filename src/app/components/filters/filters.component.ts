@@ -1,8 +1,8 @@
 import { Component, inject } from '@angular/core';
 
-import { ObjectType, PeopleSubfilter, StarshipsSubfilter } from 'src/enums';
-import { Filters } from 'src/models';
-import { FiltersService } from 'src/services/filters/filters.service';
+import { ObjectType, PeopleSubfilter, StarshipsSubfilter } from 'src/app/enums';
+import { Filters } from 'src/app/models';
+import { FiltersService } from 'src/app/services/filters/filters.service';
 
 @Component({
   selector: 'app-filters',

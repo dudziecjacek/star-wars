@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
-import { ObjectType } from 'src/enums/object-type';
-import { PeopleSubfilter } from 'src/enums/people-subfilter';
-import { StarshipsSubfilter } from 'src/enums/starships-subfilter';
-import { Filters } from 'src/models/filters';
+
+import { ObjectType, PeopleSubfilter, StarshipsSubfilter } from 'src/app/enums';
+import { Filters } from 'src/app/models';
 
 @Injectable({
   providedIn: 'root',

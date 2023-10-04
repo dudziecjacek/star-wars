@@ -1,12 +1,15 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, forkJoin, map, tap } from 'rxjs';
+
 import { SwapiAbstract } from '../abstract/abstract-swapi';
-import { GetPersonResponse } from 'src/models/get-person-response';
-import { Person } from 'src/models/person';
-import { GetStarshipResponse } from 'src/models/get-starship-response';
-import { Starship } from 'src/models/starship';
-import { ObjectType } from 'src/enums/object-type';
+import { ObjectType } from 'src/app/enums';
+import {
+  GetPersonResponse,
+  GetStarshipResponse,
+  Person,
+  Starship,
+} from 'src/app/models';
 
 @Injectable({
   providedIn: 'root',

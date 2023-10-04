@@ -3,14 +3,14 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { of } from 'rxjs';
 import { AppComponent } from './app.component';
-import { FiltersService } from 'src/services/filters/filters.service';
-import { SwapiService } from 'src/services/swapi/swapi.service';
+import { FiltersService } from 'src/app/services/filters/filters.service';
+import { SwapiService } from 'src/app/services/swapi/swapi.service';
 import { FiltersComponent } from './components/filters/filters.component';
 import { StarshipComponent } from './components/starship/starship.component';
 import { WinnerComponent } from './components/winner/winner.component';
 import { PersonComponent } from './components/person/person.component';
-import { Filters, Person, Starship } from 'src/models';
-import { ObjectType, PeopleSubfilter, StarshipsSubfilter } from 'src/enums';
+import { Filters, Person, Starship } from 'src/app/models';
+import { ObjectType, PeopleSubfilter, StarshipsSubfilter } from 'src/app/enums';
 
 describe('AppComponent', () => {
   let component: AppComponent;

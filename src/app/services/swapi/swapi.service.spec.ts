@@ -1,14 +1,17 @@
 import { TestBed } from '@angular/core/testing';
-import { SwapiService } from './swapi.service';
 import {
   HttpClientTestingModule,
   HttpTestingController,
 } from '@angular/common/http/testing';
-import { GetPersonResponse } from 'src/models/get-person-response';
-import { GetStarshipResponse } from 'src/models/get-starship-response';
-import { ObjectType } from 'src/enums/object-type';
-import { Person } from 'src/models/person';
-import { Starship } from 'src/models/starship';
+
+import { SwapiService } from './swapi.service';
+import { ObjectType } from 'src/app/enums';
+import {
+  GetPersonResponse,
+  GetStarshipResponse,
+  Person,
+  Starship,
+} from 'src/app/models';
 
 describe('SwapiService', () => {
   let service: SwapiService;

@@ -1,8 +1,5 @@
-import { PeopleSubfilter } from 'src/enums/people-subfilter';
-import { ResultEnum } from 'src/enums/result-enum';
-import { StarshipsSubfilter } from 'src/enums/starships-subfilter';
-import { Person } from 'src/models/person';
-import { Starship } from 'src/models/starship';
+import { PeopleSubfilter, ResultEnum, StarshipsSubfilter } from 'src/app/enums';
+import { Person, Starship } from 'src/app/models';
 
 export abstract class SwapiAbstract {
   private static readonly UNKNOWN = 'unknown';
