@@ -99,11 +99,46 @@
             ],
             "scripts": []
           }
+        },
+        "cypress-run": {
+          "builder": "@cypress/schematic:cypress",
+          "options": {
+            "devServerTarget": "star-wars:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "star-wars:serve:production"
+            }
+          }
+        },
+        "cypress-open": {
+          "builder": "@cypress/schematic:cypress",
+          "options": {
+            "watch": true,
+            "headless": false
+          }
+        },
+        "e2e": {
+          "builder": "@cypress/schematic:cypress",
+          "options": {
+            "devServerTarget": "star-wars:serve",
+            "watch": true,
+            "headless": false
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "star-wars:serve:production"
+            }
+          }
         }
       }
     }
   },
   "cli": {
-    "analytics": "5cf54096-0576-48f8-a4ef-32b3d8008b6e"
+    "analytics": "5cf54096-0576-48f8-a4ef-32b3d8008b6e",
+    "schematicCollections": [
+      "@cypress/schematic",
+      "@schematics/angular"
+    ]
   }
 }

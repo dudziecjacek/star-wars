@@ -1,0 +1,23 @@
+{
+  "message": "ok",
+  "result": {
+    "properties": {
+      "height": "180",
+      "mass": "110",
+      "hair_color": "brown",
+      "skin_color": "fair",
+      "eye_color": "blue",
+      "birth_year": "unknown",
+      "gender": "male",
+      "created": "2023-10-03T18:51:28.167Z",
+      "edited": "2023-10-03T18:51:28.167Z",
+      "name": "Jek Tono Porkins",
+      "homeworld": "https://www.swapi.tech/api/planets/26",
+      "url": "https://www.swapi.tech/api/people/19"
+    },
+    "description": "A person within the Star Wars universe",
+    "_id": "5f63a36fee9fd7000499be53",
+    "uid": "19",
+    "__v": 0
+  }
+}
