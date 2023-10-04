@@ -1,4 +1,8 @@
 <div class="container">
+  <h1>Star Wars Battle</h1>
+  <p>
+    Choose resource and it's attribute. Press the button to determine winner!
+  </p>
   <app-filters testId="filters"></app-filters>
 
   <div class="result" testId="result">
@@ -28,10 +32,15 @@
       </div>
     </ng-container>
   </div>
+
   <mat-spinner
     *ngIf="isLoading && !errorMessage"
     testId="spinner"
   ></mat-spinner>
-  <ng-container *ngIf="errorMessage">{{ errorMessage }}</ng-container>
-  <button mat-button (click)="onClick()" testId="button">Search</button>
+
+  <div class="error" *ngIf="errorMessage">{{ errorMessage }}</div>
+
+  <button mat-raised-button color="primary" (click)="onClick()" testId="button">
+    Search
+  </button>
 </div>

@@ -2,10 +2,6 @@
   padding: 20px;
 }
 
-mat-button-toggle-group {
-  --mat-standard-button-toggle-selected-state-background-color: gray;
-}
-
 .result {
   display: flex;
   flex-direction: column;
@@ -23,4 +19,8 @@ button {
 
 .winner {
   margin: 20px 0;
+}
+
+.error {
+  color: red;
 }

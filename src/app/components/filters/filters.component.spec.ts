@@ -1,11 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FiltersComponent } from './filters.component';
-import { FiltersService } from 'src/services/filters/filters.service';
-import { ObjectType } from 'src/enums/object-type';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { FormsModule } from '@angular/forms';
-import { PeopleSubfilter } from 'src/enums/people-subfilter';
-import { StarshipsSubfilter } from 'src/enums/starships-subfilter';
+
+import { FiltersComponent } from './filters.component';
+import { FiltersService } from 'src/services/filters/filters.service';
+import { ObjectType, PeopleSubfilter, StarshipsSubfilter } from 'src/enums';
 
 describe('FiltersComponent', () => {
   let component: FiltersComponent;
@@ -39,25 +38,27 @@ describe('FiltersComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should display people filters when PEOPLE is selected', () => {
-    component['filters'].main.selected = ObjectType.PEOPLE;
-    fixture.detectChanges();
-    expect(
-      fixture.nativeElement.querySelector('[testId="peopleHeightFilter"]')
-    ).toBeTruthy();
-    expect(
-      fixture.nativeElement.querySelector('[testId="peopleMassFilter"]')
-    ).toBeTruthy();
-  });
+  describe('filters actions', () => {
+    it('should display people filters when PEOPLE is selected', () => {
+      component['filters'].main.selected = ObjectType.PEOPLE;
+      fixture.detectChanges();
+      expect(
+        fixture.nativeElement.querySelector('[testId="peopleHeightFilter"]')
+      ).toBeTruthy();
+      expect(
+        fixture.nativeElement.querySelector('[testId="peopleMassFilter"]')
+      ).toBeTruthy();
+    });
 
-  it('should display starships filters when STARSHIPS is selected', () => {
-    component['filters'].main.selected = ObjectType.STARSHIPS;
-    fixture.detectChanges();
-    expect(
-      fixture.nativeElement.querySelector('[testId="starshipsCrewFilter"]')
-    ).toBeTruthy();
-    expect(
-      fixture.nativeElement.querySelector('[testId="starshipsLengthFilter"]')
-    ).toBeTruthy();
+    it('should display starships filters when STARSHIPS is selected', () => {
+      component['filters'].main.selected = ObjectType.STARSHIPS;
+      fixture.detectChanges();
+      expect(
+        fixture.nativeElement.querySelector('[testId="starshipsCrewFilter"]')
+      ).toBeTruthy();
+      expect(
+        fixture.nativeElement.querySelector('[testId="starshipsLengthFilter"]')
+      ).toBeTruthy();
+    });
   });
 });

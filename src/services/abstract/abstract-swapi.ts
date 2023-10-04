@@ -2,7 +2,6 @@ import { PeopleSubfilter } from 'src/enums/people-subfilter';
 import { ResultEnum } from 'src/enums/result-enum';
 import { StarshipsSubfilter } from 'src/enums/starships-subfilter';
 import { Person } from 'src/models/person';
-import { PersonOrStarship } from 'src/models/person-or-starship';
 import { Starship } from 'src/models/starship';
 
 export abstract class SwapiAbstract {
@@ -21,7 +20,7 @@ export abstract class SwapiAbstract {
   }
 
   public static determineWinner(
-    res: PersonOrStarship,
+    res: [Person, Person] | [Starship, Starship],
     toggledFilter: PeopleSubfilter | StarshipsSubfilter
   ) {
     if (toggledFilter in PeopleSubfilter) {

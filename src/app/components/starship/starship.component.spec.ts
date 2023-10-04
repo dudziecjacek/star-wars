@@ -1,7 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatCardModule } from '@angular/material/card';
+
 import { StarshipComponent } from './starship.component';
-import { StarshipsSubfilter } from 'src/enums/starships-subfilter';
+import { StarshipsSubfilter } from 'src/enums';
 
 describe('StarshipComponent', () => {
   let component: StarshipComponent;
@@ -29,25 +30,27 @@ describe('StarshipComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should highlight the height attribute when activeFilter is set to height', () => {
-    component.activeFilter = StarshipsSubfilter.CREW;
-    fixture.detectChanges();
-    const crewAttribute = fixture.nativeElement.querySelector(
-      '[testId="crewAttribute"]'
-    );
+  describe('starship actions', () => {
+    it('should highlight the height attribute when activeFilter is set to height', () => {
+      component.activeFilter = StarshipsSubfilter.CREW;
+      fixture.detectChanges();
+      const crewAttribute = fixture.nativeElement.querySelector(
+        '[testId="crewAttribute"]'
+      );
 
-    expect(crewAttribute).toBeTruthy();
-    expect(crewAttribute.classList).toContain('active');
-  });
+      expect(crewAttribute).toBeTruthy();
+      expect(crewAttribute.classList).toContain('active');
+    });
 
-  it('should highlight the mass attribute when activeFilter is set to mass', () => {
-    component.activeFilter = StarshipsSubfilter.LENGTH;
-    fixture.detectChanges();
-    const lengthAttribute = fixture.nativeElement.querySelector(
-      '[testId="lengthAttribute"]'
-    );
+    it('should highlight the mass attribute when activeFilter is set to mass', () => {
+      component.activeFilter = StarshipsSubfilter.LENGTH;
+      fixture.detectChanges();
+      const lengthAttribute = fixture.nativeElement.querySelector(
+        '[testId="lengthAttribute"]'
+      );
 
-    expect(lengthAttribute).toBeTruthy();
-    expect(lengthAttribute.classList).toContain('active');
+      expect(lengthAttribute).toBeTruthy();
+      expect(lengthAttribute.classList).toContain('active');
+    });
   });
 });

@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { PeopleSubfilter } from 'src/enums/people-subfilter';
-import { StarshipsSubfilter } from 'src/enums/starships-subfilter';
+
+import { PeopleSubfilter, StarshipsSubfilter } from 'src/enums';
 import { Person } from 'src/models/person';
 
 @Component({
@@ -13,4 +13,6 @@ export class PersonComponent {
   @Input({ required: true }) public activeFilter!:
     | PeopleSubfilter
     | StarshipsSubfilter;
+
+  protected peopleSubfilterEnum: typeof PeopleSubfilter = PeopleSubfilter;
 }

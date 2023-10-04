@@ -9,7 +9,6 @@ import { GetStarshipResponse } from 'src/models/get-starship-response';
 import { ObjectType } from 'src/enums/object-type';
 import { Person } from 'src/models/person';
 import { Starship } from 'src/models/starship';
-import { PersonOrStarship } from 'src/models/person-or-starship';
 
 describe('SwapiService', () => {
   let service: SwapiService;

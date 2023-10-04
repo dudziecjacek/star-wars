@@ -1,10 +1,9 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { ChangeDetectorRef, Component, ViewChild, inject } from '@angular/core';
 import { EMPTY, Observable, catchError, first, tap } from 'rxjs';
-import { ObjectType } from 'src/enums/object-type';
-import { ResultEnum } from 'src/enums/result-enum';
-import { Person } from 'src/models/person';
-import { Starship } from 'src/models/starship';
+
+import { ObjectType, ResultEnum } from 'src/enums';
+import { Filters, Person, Starship } from 'src/models';
 import { SwapiAbstract } from 'src/services/abstract/abstract-swapi';
 import { FiltersService } from 'src/services/filters/filters.service';
 import { SwapiService } from 'src/services/swapi/swapi.service';
@@ -20,7 +19,7 @@ export class AppComponent {
   protected errorMessage: string = '';
   protected winner: ResultEnum = ResultEnum.NONE;
 
-  @ViewChild(WinnerComponent) winnerComponent!: WinnerComponent;
+  @ViewChild(WinnerComponent) protected winnerComponent!: WinnerComponent;
 
   private readonly swapiService: SwapiService = inject(SwapiService);
   private readonly filtersService: FiltersService = inject(FiltersService);
@@ -95,7 +94,7 @@ export class AppComponent {
     return this.swapiService.getStarshipResponse$;
   }
 
-  protected get filters() {
+  protected get filters(): Filters {
     return this.filtersService.filters;
   }
 }

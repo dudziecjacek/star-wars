@@ -1,28 +1,24 @@
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { of, throwError } from 'rxjs';
+
+import { of } from 'rxjs';
 import { AppComponent } from './app.component';
-import { HttpErrorResponse } from '@angular/common/http';
 import { FiltersService } from 'src/services/filters/filters.service';
 import { SwapiService } from 'src/services/swapi/swapi.service';
 import { FiltersComponent } from './components/filters/filters.component';
 import { StarshipComponent } from './components/starship/starship.component';
 import { WinnerComponent } from './components/winner/winner.component';
 import { PersonComponent } from './components/person/person.component';
-import { MatButtonToggleModule } from '@angular/material/button-toggle';
-import { Filters } from 'src/models/filters';
-import { ObjectType } from 'src/enums/object-type';
-import { PeopleSubfilter } from 'src/enums/people-subfilter';
-import { StarshipsSubfilter } from 'src/enums/starships-subfilter';
-import { Person } from 'src/models/person';
-import { Starship } from 'src/models/starship';
+import { Filters, Person, Starship } from 'src/models';
+import { ObjectType, PeopleSubfilter, StarshipsSubfilter } from 'src/enums';
 
-fdescribe('AppComponent', () => {
+describe('AppComponent', () => {
   let component: AppComponent;
   let fixture: ComponentFixture<AppComponent>;
   let mockSwapiService: jasmine.SpyObj<SwapiService>;
   let mockFiltersService: jasmine.SpyObj<FiltersService>;
 
-  beforeEach(async () => {
+  beforeEach(() => {
     mockSwapiService = jasmine.createSpyObj('SwapiService', [
       'getPeopleArray',
       'getStarshipsArray',
@@ -36,7 +32,7 @@ fdescribe('AppComponent', () => {
     mockSwapiService.getPeopleArray.and.returnValue(of(mockPersonArray()));
     mockSwapiService.getStarshipsArray.and.returnValue(of(mockStarshipArray()));
 
-    await TestBed.configureTestingModule({
+    TestBed.configureTestingModule({
       declarations: [
         AppComponent,
         FiltersComponent,

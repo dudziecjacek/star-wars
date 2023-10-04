@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
-import { ObjectType } from 'src/enums/object-type';
-import { PeopleSubfilter } from 'src/enums/people-subfilter';
-import { StarshipsSubfilter } from 'src/enums/starships-subfilter';
+
+import { ObjectType, PeopleSubfilter, StarshipsSubfilter } from 'src/enums';
+import { Filters } from 'src/models';
 import { FiltersService } from 'src/services/filters/filters.service';
 
 @Component({
@@ -10,14 +10,14 @@ import { FiltersService } from 'src/services/filters/filters.service';
   styleUrls: ['./filters.component.scss'],
 })
 export class FiltersComponent {
-  private readonly filtersService: FiltersService = inject(FiltersService);
-
   protected objectTypeEnum: typeof ObjectType = ObjectType;
   protected peopleSubfilterEnum: typeof PeopleSubfilter = PeopleSubfilter;
   protected starshipsSubfilterEnum: typeof StarshipsSubfilter =
     StarshipsSubfilter;
 
-  protected get filters() {
+  private readonly filtersService: FiltersService = inject(FiltersService);
+
+  protected get filters(): Filters {
     return this.filtersService.filters;
   }
 }

@@ -5,7 +5,7 @@
   <mat-card-content>
     <div
       class="attribute"
-      [class.active]="activeFilter === 'crew'"
+      [class.active]="activeFilter === starshipsSubfilterEnum.CREW"
       testId="crewAttribute"
     >
       <div>Crew</div>
@@ -13,7 +13,7 @@
     </div>
     <div
       class="attribute"
-      [class.active]="activeFilter === 'length'"
+      [class.active]="activeFilter === starshipsSubfilterEnum.LENGTH"
       testId="lengthAttribute"
     >
       <div>Length</div>
