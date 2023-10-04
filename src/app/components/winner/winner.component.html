@@ -1,0 +1,8 @@
+<div>Player One Score: {{ playerOneScore }}</div>
+<div>Player Two Score: {{ playerTwoScore }}</div>
+
+<div class="winner" testId="winner" [ngSwitch]="winner">
+  <ng-container *ngSwitchCase="'one'">Player One Wins!</ng-container>
+  <ng-container *ngSwitchCase="'two'">Player Two Wins!</ng-container>
+  <ng-container *ngSwitchCase="'draw'">It's a draw!</ng-container>
+</div>

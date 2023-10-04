@@ -1,0 +1,38 @@
+<mat-button-toggle-group [(ngModel)]="filters.main.selected">
+  <mat-button-toggle [value]="objectTypeEnum.PEOPLE">People</mat-button-toggle>
+  <mat-button-toggle [value]="objectTypeEnum.STARSHIPS"
+    >Starships</mat-button-toggle
+  >
+</mat-button-toggle-group>
+<hr />
+<mat-button-toggle-group
+  *ngIf="filters.main.selected === objectTypeEnum.PEOPLE"
+  [(ngModel)]="filters.selectedPeopleFilter"
+>
+  <mat-button-toggle
+    [value]="peopleSubfilterEnum.HEIGHT"
+    testId="peopleHeightFilter"
+    >Height</mat-button-toggle
+  >
+  <mat-button-toggle
+    [value]="peopleSubfilterEnum.MASS"
+    testId="peopleMassFilter"
+    >Mass</mat-button-toggle
+  >
+</mat-button-toggle-group>
+
+<mat-button-toggle-group
+  *ngIf="filters.main.selected === objectTypeEnum.STARSHIPS"
+  [(ngModel)]="filters.selectedStarshipsFilter"
+>
+  <mat-button-toggle
+    [value]="starshipsSubfilterEnum.CREW"
+    testId="starshipsCrewFilter"
+    >Crew</mat-button-toggle
+  >
+  <mat-button-toggle
+    [value]="starshipsSubfilterEnum.LENGTH"
+    testId="starshipsLengthFilter"
+    >Length</mat-button-toggle
+  >
+</mat-button-toggle-group>
