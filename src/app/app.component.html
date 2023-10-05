@@ -10,11 +10,11 @@
     <ng-container *ngIf="!isLoading && (person$ | async) as result">
       <div class="card-container">
         <app-person
-          [activeFilter]="filters.toggledFilter"
+          [activeFilter]="filters.selectedSubFilterType"
           [person]="result[0]"
         ></app-person>
         <app-person
-          [activeFilter]="filters.toggledFilter"
+          [activeFilter]="filters.selectedSubFilterType"
           [person]="result[1]"
         ></app-person>
       </div>
@@ -22,11 +22,11 @@
     <ng-container *ngIf="!isLoading && (starship$ | async) as result">
       <div class="card-container">
         <app-starship
-          [activeFilter]="filters.toggledFilter"
+          [activeFilter]="filters.selectedSubFilterType"
           [starship]="result[0]"
         ></app-starship>
         <app-starship
-          [activeFilter]="filters.toggledFilter"
+          [activeFilter]="filters.selectedSubFilterType"
           [starship]="result[1]"
         ></app-starship>
       </div>
@@ -38,7 +38,9 @@
     testId="spinner"
   ></mat-spinner>
 
-  <div class="error" *ngIf="errorMessage">{{ errorMessage }}</div>
+  <div class="error" *ngIf="errorMessage" testId="error">
+    {{ errorMessage }}
+  </div>
 
   <button mat-raised-button color="primary" (click)="onClick()" testId="button">
     Search

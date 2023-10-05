@@ -1,8 +1,12 @@
-import { HttpErrorResponse } from '@angular/common/http';
 import { ChangeDetectorRef, Component, ViewChild, inject } from '@angular/core';
 import { EMPTY, Observable, catchError, first, tap } from 'rxjs';
 
-import { ObjectType, ResultEnum } from 'src/app/enums';
+import {
+  ObjectType,
+  PeopleSubfilter,
+  ResultEnum,
+  StarshipsSubfilter,
+} from 'src/app/enums';
 import { Filters, Person, Starship } from 'src/app/models';
 import { SwapiAbstract } from 'src/app/services/abstract/abstract-swapi';
 import { FiltersService } from 'src/app/services/filters/filters.service';
@@ -25,6 +29,8 @@ export class AppComponent {
   private readonly filtersService: FiltersService = inject(FiltersService);
   private readonly changeDetector: ChangeDetectorRef =
     inject(ChangeDetectorRef);
+  private static readonly HTTP_ERROR_MESSAGE: string =
+    'There was a problem with request. Try again';
 
   protected onClick(): void {
     this.loadData();
@@ -51,13 +57,13 @@ export class AppComponent {
         first(),
         tap((res: [Person, Person]) => {
           this.isLoading = false;
-          this.winner = SwapiAbstract.determineWinner(
+          this.winner = SwapiAbstract.determinePeopleWinner(
             res,
-            this.filters.toggledFilter
+            this.filters.selectedSubFilterType as PeopleSubfilter
           );
           this.winnerComponent.updateScore(this.winner);
         }),
-        catchError((error: HttpErrorResponse) => this.handleCatchError(error))
+        catchError(() => this.handleCatchError())
       )
       .subscribe();
   }
@@ -69,19 +75,19 @@ export class AppComponent {
         first(),
         tap((res: [Starship, Starship]) => {
           this.isLoading = false;
-          this.winner = SwapiAbstract.determineWinner(
+          this.winner = SwapiAbstract.determineStarshipsWinner(
             res,
-            this.filters.toggledFilter
+            this.filters.selectedSubFilterType as StarshipsSubfilter
           );
           this.winnerComponent.updateScore(this.winner);
         }),
-        catchError((error: HttpErrorResponse) => this.handleCatchError(error))
+        catchError(() => this.handleCatchError())
       )
       .subscribe();
   }
 
-  private handleCatchError(error: HttpErrorResponse): Observable<never> {
-    this.errorMessage = error.message;
+  private handleCatchError(): Observable<never> {
+    this.errorMessage = AppComponent.HTTP_ERROR_MESSAGE;
     this.changeDetector.detectChanges();
     return EMPTY;
   }

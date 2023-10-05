@@ -3,7 +3,7 @@ import { PeopleSubfilter } from 'src/app/enums/people-subfilter';
 import { StarshipsSubfilter } from 'src/app/enums/starships-subfilter';
 
 export interface Filters {
-  toggledFilter: PeopleSubfilter | StarshipsSubfilter;
+  selectedSubFilterType: PeopleSubfilter | StarshipsSubfilter;
   selectedPeopleFilter: PeopleSubfilter;
   selectedStarshipsFilter: StarshipsSubfilter;
   main: {

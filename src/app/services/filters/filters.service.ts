@@ -8,7 +8,7 @@ import { Filters } from 'src/app/models';
 })
 export class FiltersService {
   public filters: Filters = {
-    toggledFilter: PeopleSubfilter.HEIGHT,
+    selectedSubFilterType: PeopleSubfilter.HEIGHT,
     selectedPeopleFilter: PeopleSubfilter.HEIGHT,
     selectedStarshipsFilter: StarshipsSubfilter.CREW,
     main: { selected: ObjectType.PEOPLE, searched: ObjectType.NONE },
@@ -17,7 +17,7 @@ export class FiltersService {
   public setFilters(): void {
     this.filters.main.searched = this.filters.main.selected;
 
-    this.filters.toggledFilter =
+    this.filters.selectedSubFilterType =
       this.filters.main.selected === ObjectType.PEOPLE
         ? this.filters.selectedPeopleFilter
         : this.filters.selectedStarshipsFilter;

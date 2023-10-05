@@ -13,7 +13,7 @@ describe('FiltersComponent', () => {
 
   mockFiltersService = {
     filters: {
-      toggledFilter: PeopleSubfilter.HEIGHT,
+      selectedSubFilterType: PeopleSubfilter.HEIGHT,
       selectedPeopleFilter: PeopleSubfilter.HEIGHT,
       selectedStarshipsFilter: StarshipsSubfilter.CREW,
       main: { selected: ObjectType.PEOPLE, searched: ObjectType.NONE },

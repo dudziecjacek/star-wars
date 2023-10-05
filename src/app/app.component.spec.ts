@@ -1,7 +1,10 @@
-import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { HttpErrorResponse } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormsModule } from '@angular/forms';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { of, throwError } from 'rxjs';
 
-import { of } from 'rxjs';
 import { AppComponent } from './app.component';
 import { FiltersService } from 'src/app/services/filters/filters.service';
 import { SwapiService } from 'src/app/services/swapi/swapi.service';
@@ -40,7 +43,7 @@ describe('AppComponent', () => {
         WinnerComponent,
         StarshipComponent,
       ],
-      imports: [MatButtonToggleModule],
+      imports: [MatButtonToggleModule, MatProgressSpinnerModule, FormsModule],
       providers: [
         { provide: SwapiService, useValue: mockSwapiService },
         { provide: FiltersService, useValue: mockFiltersService },
@@ -65,7 +68,8 @@ describe('AppComponent', () => {
   describe('onClick method', () => {
     it('should call loadData method', () => {
       const loadDataSpy = spyOn(component, <never>'loadData');
-      component['onClick']();
+      findAndClickButton(fixture);
+
       expect(loadDataSpy).toHaveBeenCalled();
     });
   });
@@ -76,17 +80,30 @@ describe('AppComponent', () => {
         component,
         <never>'determineSearchType'
       );
+      findAndClickButton(fixture);
 
-      component['onClick']();
       expect(component['isLoading']).toBeTrue();
       expect(determineSearchTypeSpy).toHaveBeenCalledWith(ObjectType.PEOPLE);
     });
+  });
+
+  it('should handle errors during API calls', () => {
+    mockSwapiService.getPeopleArray.and.returnValue(
+      throwError(() => new HttpErrorResponse({}))
+    );
+    findAndClickButton(fixture);
+
+    fixture.detectChanges();
+
+    const errorComponent =
+      fixture.nativeElement.querySelector('[testId="error"]');
+    expect(errorComponent).toBeTruthy();
   });
 });
 
 function prepareFilters(): Filters {
   return {
-    toggledFilter: PeopleSubfilter.HEIGHT,
+    selectedSubFilterType: PeopleSubfilter.HEIGHT,
     selectedPeopleFilter: PeopleSubfilter.HEIGHT,
     selectedStarshipsFilter: StarshipsSubfilter.CREW,
     main: { selected: ObjectType.PEOPLE, searched: ObjectType.NONE },
@@ -96,21 +113,21 @@ function prepareFilters(): Filters {
 function mockPersonArray(): [Person, Person] {
   return [
     {
-      name: 'Luke Skywalker',
-      height: '172',
-      mass: '77',
+      name: 'Yoda',
+      height: '78',
+      mass: '60',
     },
     {
-      name: 'Darth Vader',
-      height: '202',
-      mass: '136',
+      name: 'Han Solo',
+      height: '190',
+      mass: '90',
     },
   ];
 }
 function mockStarshipArray(): [Starship, Starship] {
   return [
     {
-      name: 'Millennium Falcon',
+      name: 'Falcon',
       crew: '4',
       length: '34.37',
     },
@@ -120,4 +137,9 @@ function mockStarshipArray(): [Starship, Starship] {
       length: '1,600',
     },
   ];
+}
+
+function findAndClickButton(fixture: ComponentFixture<AppComponent>): void {
+  const button = fixture.nativeElement.querySelector('[testId="button"]');
+  button.click();
 }

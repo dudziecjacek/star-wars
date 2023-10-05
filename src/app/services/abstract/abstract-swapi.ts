@@ -16,21 +16,24 @@ export abstract class SwapiAbstract {
     return [String(firstNumber), String(secondNumber)];
   }
 
-  public static determineWinner(
-    res: [Person, Person] | [Starship, Starship],
-    toggledFilter: PeopleSubfilter | StarshipsSubfilter
+  public static determinePeopleWinner(
+    res: [Person, Person],
+    selectedSubFilterType: PeopleSubfilter
   ) {
-    if (toggledFilter in PeopleSubfilter) {
-      return SwapiAbstract.calculateHigherValue(
-        (res[0] as Person)[toggledFilter as keyof Person],
-        (res[1] as Person)[toggledFilter as keyof Person]
-      );
-    } else {
-      return SwapiAbstract.calculateHigherValue(
-        (res[0] as Starship)[toggledFilter as keyof Starship],
-        (res[1] as Starship)[toggledFilter as keyof Starship]
-      );
-    }
+    return SwapiAbstract.calculateHigherValue(
+      res[0][selectedSubFilterType],
+      res[1][selectedSubFilterType]
+    );
+  }
+
+  public static determineStarshipsWinner(
+    res: [Starship, Starship],
+    selectedSubFilterType: StarshipsSubfilter
+  ) {
+    return SwapiAbstract.calculateHigherValue(
+      res[0][selectedSubFilterType],
+      res[1][selectedSubFilterType]
+    );
   }
 
   private static calculateHigherValue(

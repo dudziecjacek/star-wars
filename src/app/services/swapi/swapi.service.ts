@@ -43,6 +43,7 @@ export class SwapiService {
     return forkJoin([this.getPerson(firstId), this.getPerson(secondId)]).pipe(
       tap(([data1, data2]) => {
         this._getPersonResponse$.next([data1, data2]);
+        this._getStarshipResponse$.next(null);
       })
     );
   }
@@ -66,6 +67,7 @@ export class SwapiService {
     ]).pipe(
       tap(([data1, data2]) => {
         this._getStarshipResponse$.next([data1, data2]);
+        this._getPersonResponse$.next(null);
       })
     );
   }

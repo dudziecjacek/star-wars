@@ -18,7 +18,9 @@ describe('FiltersService', () => {
   });
 
   it('should have default filters set', () => {
-    expect(service.filters.toggledFilter).toEqual(PeopleSubfilter.HEIGHT);
+    expect(service.filters.selectedSubFilterType).toEqual(
+      PeopleSubfilter.HEIGHT
+    );
     expect(service.filters.selectedPeopleFilter).toEqual(
       PeopleSubfilter.HEIGHT
     );
@@ -34,7 +36,7 @@ describe('FiltersService', () => {
       service.filters.main.selected = ObjectType.PEOPLE;
       service.setFilters();
       expect(service.filters.main.searched).toEqual(ObjectType.PEOPLE);
-      expect(service.filters.toggledFilter).toEqual(
+      expect(service.filters.selectedSubFilterType).toEqual(
         service.filters.selectedPeopleFilter
       );
     });
@@ -43,7 +45,7 @@ describe('FiltersService', () => {
       service.filters.main.selected = ObjectType.STARSHIPS;
       service.setFilters();
       expect(service.filters.main.searched).toEqual(ObjectType.STARSHIPS);
-      expect(service.filters.toggledFilter).toEqual(
+      expect(service.filters.selectedSubFilterType).toEqual(
         service.filters.selectedStarshipsFilter
       );
     });
